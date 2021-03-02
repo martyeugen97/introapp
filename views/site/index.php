@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use app\models\Order;
+
 $this->title = 'Yii app';
 ?>
 <div class="site-index">
@@ -150,7 +152,7 @@ $this->title = 'Yii app';
 
             </div>
             <div class="col-sm-4 pagination-counters">
-                1 to 100 of 3263
+                1 to 100 of <?= Order::find()->count() ?>
             </div>
         </div>
     </div>
