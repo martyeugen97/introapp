@@ -3,12 +3,11 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Order;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -61,6 +60,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Order::find();
+        $pages = new Pagination(['totalCount' => $query->count()]);
+        $orders = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('index', compact('orders', 'pages'));
     }
 }

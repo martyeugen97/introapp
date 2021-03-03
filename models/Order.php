@@ -8,11 +8,6 @@ use yii\db\ActiveRecord;
 
 class Order extends ActiveRecord
 {
-    public $link;
-    public $quantity;
-    public $status;
-    public $mode;
-
     /**
      * @return array the validation rules.
      */
@@ -39,11 +34,7 @@ class Order extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return [];
-    }
-
-    public function totalOrders()
-    {
-
+        return [
+        ];
     }
 }
