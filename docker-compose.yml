@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - db
+      - webserver
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
@@ -37,9 +40,9 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3307:3307"
+      - "3306:3306"
     volumes:
-      - ./docker/mysql/dumps:/docker-entrypoint-initdb.d/
+      - ./docker/mysql/SQL/:/docker-entrypoint-initdb.d/:rw
     environment:
       MYSQL_DATABASE: introapp
       MYSQL_ROOT_PASSWORD: password
