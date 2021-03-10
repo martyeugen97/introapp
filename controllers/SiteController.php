@@ -60,13 +60,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $request = Yii::$app->request;
+        $status = $request->get('status', 'all');
+        if ($status != 'all') {
+            $status = (int)$status;
+        }
+
         $query = Order::find();
         $pages = new Pagination(['totalCount' => $query->count()]);
-        $orders = $query->offset($pages->offset)
-            ->limit($pages->limit)
+        $orders = $query->offset($pages->offset);
+        if (is_numeric($status)) {
+            $orders = $orders->where(['status' => (int)$status]);
+        }
+
+        $orders = $orders->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
-        return $this->render('index', compact('orders', 'pages'));
+        return $this->render('index', compact('orders', 'pages', 'status'));
     }
 }

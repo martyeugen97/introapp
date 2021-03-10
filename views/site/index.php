@@ -5,15 +5,29 @@
 use app\models\Order;
 use app\models\User;
 use yii\widgets\LinkPager;
+use yii\widgets\Menu;
 
 $this->title = 'Yii app';
 ?>
 <div class="site-index">
-
     <div class="body-content">
-
         <h2>Heading</h2>
+        <?=
+            Menu::widget([
+                'options' => ['class' => 'nav nav-tabs p-b'],
+                'items' => [
+                    ['label' => 'All orders', 'url' => [''], 'active' => $status && $status == 'all'],
+                    ['label' => 'Pending', 'url' => ['', 'status' => 0], 'active' => $status === 0],
+                    ['label' => 'In progress', 'url' => ['', 'status' => 1], 'active' => $status === 1],
+                    ['label' => 'Completed', 'url' => ['', 'status' => 2], 'active' => $status === 2],
+                    ['label' => 'Canceled', 'url' => ['', 'status' => 3], 'active' => $status === 3],
+                    ['label' => 'Error', 'url' => ['', 'status' => 4], 'active' => $status === 4],
+                ],
+                'activeCssClass'=>'active',
+            ]);
+        ?>
 
+        <!--
         <ul class="nav nav-tabs p-b">
             <li class="active"><a href="#">All orders</a></li>
             <li><a href="#">Pending</a></li>
@@ -26,19 +40,18 @@ $this->title = 'Yii app';
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                         <span class="input-group-btn search-select-wrap">
-
-            <select class="form-control search-select" name="search-type">
-              <option value="1" selected="">Order ID</option>
-              <option value="2">Link</option>
-              <option value="3">Username</option>
-            </select>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
+                            <select class="form-control search-select" name="search-type">
+                                <option value="1" selected="">Order ID</option>
+                                <option value="2">Link</option>
+                                <option value="3">Username</option>
+                            </select>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </span>
                     </div>
                 </form>
             </li>
         </ul>
-
+        -->
         <table class="table order-table">
             <thead>
             <tr>
