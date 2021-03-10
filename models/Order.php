@@ -5,6 +5,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use app\models\User;
 
 class Order extends ActiveRecord
 {
@@ -30,11 +31,37 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @return array customized attribute labels
+     * @return string
      */
-    public function attributeLabels()
+    public function getStatus()
     {
-        return [
-        ];
+        $statusArray = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
+        return $statusArray[$this->status];
     }
+
+    /**
+     * @return string
+     */
+    public function getCreatedTime()
+    {
+        return date("H:i:s", $this->created_at);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return date("Y-m-d", $this->created_at);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        $modeArray = ['Auto', 'Manual'];
+        return $modeArray[$this->mode];
+    }
+
 }

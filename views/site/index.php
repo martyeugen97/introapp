@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use app\models\Order;
+use app\models\User;
 use yii\widgets\LinkPager;
 
 $this->title = 'Yii app';
@@ -66,7 +67,8 @@ $this->title = 'Yii app';
                 <th>Status</th>
                 <th class="dropdown-th">
                     <div class="dropdown">
-                        <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Mode
                             <span class="caret"></span>
                         </button>
@@ -84,15 +86,15 @@ $this->title = 'Yii app';
                 <?php foreach ($orders as $order): ?>
                     <tr>
                         <td><?= $order->id ?></td>
-                        <td>User</td>
+                        <td><?= User::findOne($order->user_id)->getFullName() ?></td>
                         <td class="link"><?= $order->link ?></td>
                         <td><?= $order->quantity ?></td>
                         <td class="service">
                             <span class="label-id">15</span> Views
                         </td>
-                        <td><?= $order->status ?></td>
-                        <td>Auto</td>
-                        <td><span class="nowrap">2016-01-27</span><span class="nowrap">15:13:52</span></td>
+                        <td><?= $order->getStatus() ?></td>
+                        <td><?= $order->getMode() ?></td>
+                        <td><span class="nowrap"><?= $order->getCreatedDate() ?></span> <span class="nowrap"><?= $order->getCreatedTime() ?></span></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
