@@ -64,6 +64,7 @@ class SiteController extends Controller
         $pages = new Pagination(['totalCount' => $query->count()]);
         $orders = $query->offset($pages->offset)
             ->limit($pages->limit)
+            ->orderBy(['id' => SORT_DESC])
             ->all();
 
         return $this->render('index', compact('orders', 'pages'));
