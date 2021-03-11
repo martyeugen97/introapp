@@ -11,7 +11,6 @@ $this->title = 'Yii app';
 ?>
 <div class="site-index">
     <div class="body-content">
-        <h2>Heading</h2>
         <?=
             Menu::widget([
                 'options' => ['class' => 'nav nav-tabs p-b'],

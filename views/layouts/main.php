@@ -45,7 +45,7 @@ AppAsset::register($this);
 </nav>
 
 <div class="wrap">
-    <div class="container">
+    <div class="container-fluid">
         <?= $content ?>
     </div>
 </div>

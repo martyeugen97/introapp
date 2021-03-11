@@ -68,6 +68,7 @@ class SiteController extends Controller
 
         $query = Order::find();
         $pages = new Pagination(['totalCount' => $query->count()]);
+        $pages->pageSize = 100;
         $orders = $query->offset($pages->offset);
         if (is_numeric($status)) {
             $orders = $orders->where(['status' => (int)$status]);
