@@ -4,9 +4,6 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    depends_on:
-      - db
-      - webserver
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
@@ -24,6 +21,9 @@ services:
   webserver:
     image: nginx:alpine
     container_name: webserver
+    depends_on:
+      - db
+      - app
     restart: unless-stopped
     tty: true
     ports:
