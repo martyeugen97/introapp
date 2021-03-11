@@ -4,6 +4,7 @@
 
 use app\models\Order;
 use app\models\User;
+use app\models\Service;
 use yii\widgets\LinkPager;
 use yii\widgets\Menu;
 
@@ -108,7 +109,7 @@ $this->title = 'Yii app';
                         <td class="link"><?= $order->link ?></td>
                         <td><?= $order->quantity ?></td>
                         <td class="service">
-                            <span class="label-id">15</span> Views
+                            <span class="label-id"><?= $order->service_id ?></span> <?= Service::findOne($order->service_id)->name ?>
                         </td>
                         <td><?= $order->getStatus() ?></td>
                         <td><?= $order->getMode() ?></td>
