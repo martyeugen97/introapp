@@ -84,11 +84,17 @@ $this->title = 'Yii app';
                             Mode
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li class="active"><a href="">All</a></li>
-                            <li><a href="">Manual</a></li>
-                            <li><a href="">Auto</a></li>
-                        </ul>
+                        <?=
+                            Menu::widget([
+                                'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
+                                'items' => [
+                                    ['label' => 'All', 'url' => [''], 'active' => $mode && $mode == 'all'],
+                                    ['label' => 'Manual', 'url' => ['', 'mode' => 1], 'active' => $mode === 1],
+                                    ['label' => 'Auto', 'url' => ['', 'mode' => 0], 'active' => $mode === 0],
+                                ],
+                                'activeCssClass'=>'active',
+                            ]);
+                        ?>
                     </div>
                 </th>
                 <th>Created</th>

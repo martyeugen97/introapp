@@ -66,18 +66,27 @@ class SiteController extends Controller
             $status = (int)$status;
         }
 
+        $mode = $request->get('mode', 'all');
+        if ($mode != 'all') {
+            $mode = (int)$mode;
+        }
+
         $query = Order::find();
         $pages = new Pagination(['totalCount' => $query->count()]);
         $pages->pageSize = 100;
         $orders = $query->offset($pages->offset);
         if (is_numeric($status)) {
-            $orders = $orders->where(['status' => (int)$status]);
+            $orders = $orders->where(compact('status'));
+        }
+
+        if (is_numeric($mode)) {
+            $orders = $orders->where(compact('mode'));
         }
 
         $orders = $orders->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
-        return $this->render('index', compact('orders', 'pages', 'status'));
+        return $this->render('index', compact('orders', 'pages', 'status', 'mode'));
     }
 }
