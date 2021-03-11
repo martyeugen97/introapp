@@ -71,6 +71,11 @@ class SiteController extends Controller
             $mode = (int)$mode;
         }
 
+        $service_id = $request->get('service_id', 'all');
+        if ($service_id != 'all') {
+            $service_id = (int)$service_id;
+        }
+
         $query = Order::find();
         $pages = new Pagination(['totalCount' => $query->count()]);
         $pages->pageSize = 100;
@@ -83,10 +88,15 @@ class SiteController extends Controller
             $orders = $orders->andWhere(compact('mode'));
         }
 
+        if (is_numeric($service_id)) {
+            $service_id = $orders->andWhere(compact('service_id'));
+        }
+
+
         $orders = $orders->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
-        return $this->render('index', compact('orders', 'pages', 'status', 'mode'));
+        return $this->render('index', compact('orders', 'pages', 'status', 'mode', 'service_id'));
     }
 }

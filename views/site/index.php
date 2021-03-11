@@ -17,11 +17,11 @@ $this->title = 'Yii app';
                 'options' => ['class' => 'nav nav-tabs p-b'],
                 'items' => [
                     ['label' => 'All orders', 'url' => ['', 'mode' => $mode], 'active' => $status && $status == 'all'],
-                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $mode], 'active' => $status === 0],
-                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $mode], 'active' => $status === 1],
-                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $mode], 'active' => $status === 2],
-                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $mode], 'active' => $status === 3],
-                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $mode], 'active' => $status === 4],
+                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 0],
+                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 1],
+                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 2],
+                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 3],
+                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 4],
                 ],
                 'activeCssClass'=>'active',
             ]);
@@ -65,16 +65,31 @@ $this->title = 'Yii app';
                             Service
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li class="active"><a href="">All (894931)</a></li>
-                            <li><a href=""><span class="label-id">214</span>  Real Views</a></li>
-                            <li><a href=""><span class="label-id">215</span> Page Likes</a></li>
-                            <li><a href=""><span class="label-id">10</span> Page Likes</a></li>
-                            <li><a href=""><span class="label-id">217</span> Page Likes</a></li>
-                            <li><a href=""><span class="label-id">221</span> Followers</a></li>
-                            <li><a href=""><span class="label-id">224</span> Groups Join</a></li>
-                            <li><a href=""><span class="label-id">230</span> Website Likes</a></li>
-                        </ul>
+                        <?php
+                            $services = Service::find()->all();
+                            $allServices = count($services);
+                            $items = [
+                                [
+                                    'label' => "All (${allServices})",
+                                    'url' => ['', 'status' => $status, 'mode' => $mode],
+                                    'active' => $service && $service == 'all'
+                                ]
+                            ];
+
+                            foreach($services as $serviceItem) {
+                                array_push($items, [
+                                    'label' => $serviceItem->name,
+                                    'url' => ['', 'status' => $status, 'mode' => $mode, 'service_id' => $serviceItem->id],
+                                    'active' => $service_id === $serviceItem->id]
+                                );
+                            }
+
+                            echo Menu::widget([
+                                'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
+                                'items' => $items,
+                                'activeCssClass'=>'active',
+                            ]);
+                        ?>
                     </div>
                 </th>
                 <th>Status</th>
@@ -89,9 +104,9 @@ $this->title = 'Yii app';
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => ['', 'status' => $status], 'active' => $mode && $mode == 'all'],
-                                    ['label' => 'Manual', 'url' => ['', 'status' => $status, 'mode' => 1], 'active' => $mode === 1],
-                                    ['label' => 'Auto', 'url' => ['', 'status' => $status, 'mode' => 0], 'active' => $mode === 0],
+                                    ['label' => 'All', 'url' => ['', 'status' => $status, 'service_id' => $service_id], 'active' => $mode && $mode == 'all'],
+                                    ['label' => 'Manual', 'url' => ['', 'status' => $status, 'mode' => 1, 'service_id' => $service_id], 'active' => $mode === 1],
+                                    ['label' => 'Auto', 'url' => ['', 'status' => $status, 'mode' => 0, 'service_id' => $service_id], 'active' => $mode === 0],
                                 ],
                                 'activeCssClass'=>'active',
                             ]);
