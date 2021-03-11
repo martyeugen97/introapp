@@ -80,7 +80,7 @@ class SiteController extends Controller
         }
 
         if (is_numeric($mode)) {
-            $orders = $orders->where(compact('mode'));
+            $orders = $orders->andWhere(compact('mode'));
         }
 
         $orders = $orders->limit($pages->limit)

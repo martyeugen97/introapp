@@ -15,12 +15,12 @@ $this->title = 'Yii app';
             Menu::widget([
                 'options' => ['class' => 'nav nav-tabs p-b'],
                 'items' => [
-                    ['label' => 'All orders', 'url' => [''], 'active' => $status && $status == 'all'],
-                    ['label' => 'Pending', 'url' => ['', 'status' => 0], 'active' => $status === 0],
-                    ['label' => 'In progress', 'url' => ['', 'status' => 1], 'active' => $status === 1],
-                    ['label' => 'Completed', 'url' => ['', 'status' => 2], 'active' => $status === 2],
-                    ['label' => 'Canceled', 'url' => ['', 'status' => 3], 'active' => $status === 3],
-                    ['label' => 'Error', 'url' => ['', 'status' => 4], 'active' => $status === 4],
+                    ['label' => 'All orders', 'url' => ['', 'mode' => $mode], 'active' => $status && $status == 'all'],
+                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $mode], 'active' => $status === 0],
+                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $mode], 'active' => $status === 1],
+                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $mode], 'active' => $status === 2],
+                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $mode], 'active' => $status === 3],
+                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $mode], 'active' => $status === 4],
                 ],
                 'activeCssClass'=>'active',
             ]);
@@ -88,9 +88,9 @@ $this->title = 'Yii app';
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => [''], 'active' => $mode && $mode == 'all'],
-                                    ['label' => 'Manual', 'url' => ['', 'mode' => 1], 'active' => $mode === 1],
-                                    ['label' => 'Auto', 'url' => ['', 'mode' => 0], 'active' => $mode === 0],
+                                    ['label' => 'All', 'url' => ['', 'status' => $status], 'active' => $mode && $mode == 'all'],
+                                    ['label' => 'Manual', 'url' => ['', 'status' => $status, 'mode' => 1], 'active' => $mode === 1],
+                                    ['label' => 'Auto', 'url' => ['', 'status' => $status, 'mode' => 0], 'active' => $mode === 0],
                                 ],
                                 'activeCssClass'=>'active',
                             ]);
