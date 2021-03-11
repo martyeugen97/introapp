@@ -20,6 +20,13 @@ return [
         ],
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [
+                        'bootstrap.css' => __DIR__ . '/../web/css/bootstrap.min.css'
+                    ]
+                ]
+            ]
         ],
         'urlManager' => [
             'showScriptName' => true,
