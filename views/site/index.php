@@ -80,7 +80,8 @@ $this->title = 'Yii app';
                                 array_push($items, [
                                     'label' => $serviceItem->name,
                                     'url' => ['', 'status' => $status, 'mode' => $mode, 'service_id' => $serviceItem->id],
-                                    'active' => $service_id === $serviceItem->id]
+                                    'active' => $service_id === $serviceItem->id
+                                    ]
                                 );
                             }
 
