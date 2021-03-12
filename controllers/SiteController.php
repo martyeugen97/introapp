@@ -89,7 +89,7 @@ class SiteController extends Controller
         }
 
         if (is_numeric($service_id)) {
-            $service_id = $orders->andWhere(compact('service_id'));
+            $orders = $orders->andWhere(compact('service_id'));
         }
 
 
