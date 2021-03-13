@@ -80,29 +80,30 @@ class SiteController extends Controller
         $search = $request->get('search');
 
         $query = Order::find();
-        $pages = new Pagination(['totalCount' => $query->count()]);
-        $pages->pageSize = 100;
-        $orders = $query->offset($pages->offset);
         if (is_numeric($status)) {
-            $orders = $orders->where(compact('status'));
+            $query = $query->where(compact('status'));
         }
 
         if (is_numeric($mode)) {
-            $orders = $orders->andWhere(compact('mode'));
+            $query = $query->andWhere(compact('mode'));
         }
 
         if (is_numeric($service_id)) {
-            $orders = $orders->andWhere(compact('service_id'));
+            $query = $query->andWhere(compact('service_id'));
         }
 
         switch($type)
         {
             case 1:
-                $orders = $orders->andWhere(['id' => $search]);
+                $query = $query->andWhere(['id' => $search]);
                 break;
         }
 
-        $orders = $orders->limit($pages->limit)
+        $pages = new Pagination(['totalCount' => $query->count()]);
+        $pages->pageSize = 100;        
+        $orders = $query
+            ->offset($pages->offset)
+            ->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 

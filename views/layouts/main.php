@@ -38,7 +38,7 @@ AppAsset::register($this);
         </div>
         <div class="collapse navbar-collapse" id="bs-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Orders</a></li>
+                <li class="active"><a href="/">Orders</a></li>
             </ul>
         </div>
     </div>
