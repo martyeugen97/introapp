@@ -80,8 +80,15 @@ class SiteController extends Controller
         $search = $request->get('search');
 
         $query = Order::find();
+        switch($type)
+        {
+            case 1:
+                $query = $query->where(['id' => $search]);
+                break;
+        }
+
         if (is_numeric($status)) {
-            $query = $query->where(compact('status'));
+            $query = $query->andWhere(compact('status'));
         }
 
         if (is_numeric($mode)) {
@@ -90,13 +97,6 @@ class SiteController extends Controller
 
         if (is_numeric($service_id)) {
             $query = $query->andWhere(compact('service_id'));
-        }
-
-        switch($type)
-        {
-            case 1:
-                $query = $query->andWhere(['id' => $search]);
-                break;
         }
 
         $pages = new Pagination(['totalCount' => $query->count()]);
