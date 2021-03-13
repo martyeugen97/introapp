@@ -76,7 +76,7 @@ class SiteController extends Controller
             $service_id = (int)$service_id;
         }
 
-        $type = $request->get('search-type', 'none');
+        $type = $request->get('search-type');
         $search = $request->get('search');
 
         $query = Order::find();
@@ -84,6 +84,9 @@ class SiteController extends Controller
         {
             case 1:
                 $query = $query->where(['id' => $search]);
+                break;
+            case 2:
+                $query = $query->where(['link' => $search]);
                 break;
         }
 
@@ -100,7 +103,7 @@ class SiteController extends Controller
         }
 
         $pages = new Pagination(['totalCount' => $query->count()]);
-        $pages->pageSize = 100;        
+        $pages->pageSize = 100;
         $orders = $query
             ->offset($pages->offset)
             ->limit($pages->limit)

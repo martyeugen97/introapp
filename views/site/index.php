@@ -68,9 +68,9 @@ $this->title = 'Yii app';
 
                             foreach($services as $serviceItem) {
                                 array_push($items, [
-                                    'label' => $serviceItem->name,
-                                    'url' => ['', 'status' => $status, 'mode' => $mode, 'service_id' => $serviceItem->id],
-                                    'active' => $service_id === $serviceItem->id
+                                        'label' => $serviceItem->name,
+                                        'url' => ['', 'status' => $status, 'mode' => $mode, 'service_id' => $serviceItem->id],
+                                        'active' => $service_id === $serviceItem->id
                                     ]
                                 );
                             }
