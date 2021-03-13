@@ -76,6 +76,9 @@ class SiteController extends Controller
             $service_id = (int)$service_id;
         }
 
+        $type = $request->get('search-type', 'none');
+        $search = $request->get('search');
+
         $query = Order::find();
         $pages = new Pagination(['totalCount' => $query->count()]);
         $pages->pageSize = 100;
@@ -92,6 +95,12 @@ class SiteController extends Controller
             $orders = $orders->andWhere(compact('service_id'));
         }
 
+        switch($type)
+        {
+            case 1:
+                $orders = $orders->andWhere(['id' => $search]);
+                break;
+        }
 
         $orders = $orders->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
