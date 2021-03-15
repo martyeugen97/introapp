@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Order;
+use app\models\OrderSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -85,5 +86,36 @@ class SiteController extends Controller
             'mode' =>  $requestParams['mode'],
             'service_id' => $requestParams['service_id'],
         ]);
+
+    }
+
+    /**
+     * Search orders
+     *
+     * @return string
+     */
+    public function actionSearch()
+    {
+        die('');
+        $orderSearch = new OrderSearch();
+        $requestParams = Yii::$app->request->get();
+        $orderSearch->load($requestParams);
+        if (!$orderSearch->validate()) {
+            throw new BadRequestHttpException();
+        }
+
+        $orders = $orderSearch->search($requestParams['search-type'], $requestParams['search']);
+        //$pages = new Pagination(['totalCount' => count($orders)]);
+        //$pages->pageSize = 100;
+        /*
+        return $this->render('index', [
+            'orders' => $orders,
+            'pages' => $pages,
+            'search-type' => $requestParams['search-type'],
+            'search' => $requestParams['search'],
+        ]);
+        */
+
+        return print_r($orders, true);
     }
 }

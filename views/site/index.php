@@ -26,11 +26,8 @@ $this->title = 'Yii app';
                 'activeCssClass'=>'active',
             ]);
         ?>
-        <form class="form-inline" action="" method="get">
+        <form class="form-inline" action="/search" method="get">
             <div class="input-group">
-                <input type="hidden" name="status" value="<?= $status ?>">
-                <input type="hidden" name="mode" value="<?= $mode ?>" >
-                <input type="hidden" name="service_id" value="<?= $service_id ?>" >
                 <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                 <span class="input-group-btn search-select-wrap">
                     <select class="form-control search-select" name="search-type">
