@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+use yii\web\BadRequestHttpException;
 
 class SiteController extends Controller
 {
@@ -60,56 +61,29 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $request = Yii::$app->request;
-        $status = $request->get('status', 'all');
-        if ($status != 'all') {
-            $status = (int)$status;
+        $order = new Order();
+        $requestParams = Yii::$app->request->get();
+        $order->load($requestParams);
+        if (!$order->validate()) {
+            throw new BadRequestHttpException();
         }
 
-        $mode = $request->get('mode', 'all');
-        if ($mode != 'all') {
-            $mode = (int)$mode;
-        }
-
-        $service_id = $request->get('service_id', 'all');
-        if ($service_id != 'all') {
-            $service_id = (int)$service_id;
-        }
-
-        $type = $request->get('search-type');
-        $search = $request->get('search');
-
-        $query = Order::find();
-        switch($type)
-        {
-            case 1:
-                $query = $query->where(['id' => $search]);
-                break;
-            case 2:
-                $query = $query->where(['link' => $search]);
-                break;
-        }
-
-        if (is_numeric($status)) {
-            $query = $query->andWhere(compact('status'));
-        }
-
-        if (is_numeric($mode)) {
-            $query = $query->andWhere(compact('mode'));
-        }
-
-        if (is_numeric($service_id)) {
-            $query = $query->andWhere(compact('service_id'));
-        }
-
-        $pages = new Pagination(['totalCount' => $query->count()]);
+        $orders = Order::find()->where($requestParams);
+        $pages = new Pagination(['totalCount' => $orders->count()]);
         $pages->pageSize = 100;
-        $orders = $query
+        $orders = $orders
             ->offset($pages->offset)
             ->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
-        return $this->render('index', compact('orders', 'pages', 'status', 'mode', 'service_id'));
+        $requestParams = array_map('intval', $requestParams);
+        return $this->render('index', [
+            'orders' => $orders,
+            'pages' => $pages,
+            'status' => $requestParams['status'],
+            'mode' =>  $requestParams['mode'],
+            'service_id' => $requestParams['service_id'],
+        ]);
     }
 }

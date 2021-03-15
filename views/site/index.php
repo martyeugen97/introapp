@@ -16,7 +16,7 @@ $this->title = 'Yii app';
             Menu::widget([
                 'options' => ['class' => 'nav nav-tabs p-b'],
                 'items' => [
-                    ['label' => 'All orders', 'url' => ['', 'mode' => $mode, 'service_id' => $service_id], 'active' => $status && $status == 'all'],
+                    ['label' => 'All orders', 'url' => ['', 'mode' => $mode, 'service_id' => $service_id], 'active' => !isset($status)],
                     ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 0],
                     ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 1],
                     ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 2],
@@ -62,7 +62,7 @@ $this->title = 'Yii app';
                                 [
                                     'label' => "All (${allServices})",
                                     'url' => ['', 'status' => $status, 'mode' => $mode],
-                                    'active' => $service_id && $service_id == 'all'
+                                    'active' => !isset($service_id)
                                 ]
                             ];
 
@@ -95,7 +95,7 @@ $this->title = 'Yii app';
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => ['', 'status' => $status, 'service_id' => $service_id], 'active' => $mode && $mode == 'all'],
+                                    ['label' => 'All', 'url' => ['', 'status' => $status, 'service_id' => $service_id], 'active' => !isset($mode)],
                                     ['label' => 'Manual', 'url' => ['', 'status' => $status, 'mode' => 1, 'service_id' => $service_id], 'active' => $mode === 1],
                                     ['label' => 'Auto', 'url' => ['', 'status' => $status, 'mode' => 0, 'service_id' => $service_id], 'active' => $mode === 0],
                                 ],

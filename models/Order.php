@@ -15,10 +15,9 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['link', 'quantity', 'status', 'mode'], 'required'],
-            // email has to be a valid email address
-            ['link', 'url'],
+            ['status', 'number', 'min' => 0, 'max' => 4],
+            ['mode', 'number', 'min' => 0, 'max' => 1],
+            ['service_id', 'number']
         ];
     }
 
