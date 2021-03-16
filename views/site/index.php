@@ -128,7 +128,7 @@ $this->title = 'Yii app';
                 </nav>
             </div>
             <div class="col-sm-4 pagination-counters">
-                1 to 100 of <?= Order::find()->count() ?>
+                1 to <?= min(\Yii::$app->params['orders_per_page'], count($orders)) ?> of <?= Order::find()->count() ?>
             </div>
         </div>
     </div>

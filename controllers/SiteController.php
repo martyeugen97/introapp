@@ -82,7 +82,7 @@ class SiteController extends Controller
         }
 
         $pages = new Pagination(['totalCount' => $orders->count()]);
-        $pages->pageSize = 100;
+        $pages->pageSize = \Yii::$app->params['orders_per_page'];
         $orders = $orders->offset($pages->offset)
             ->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])

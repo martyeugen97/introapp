@@ -51,10 +51,10 @@ class OrderSearch extends Model
 
     private static function searchName($name)
     {
-        $names = explode(' ', addslashes($name));
-        $count = count($names);
+        $name = addslashes($name);
+        $count = count(explode(' ', $name));
         if ($count == 1) {
-            $where = "`first_name` LIKE '%${names[0]}%' OR `last_name` LIKE '%${names[0]}%'";
+            $where = "`first_name` LIKE '%${name}%' OR `last_name` LIKE '%${name}%'";
         } elseif ($count == 2) {
             $where = "CONCAT(`first_name`, ' ', `last_name`) = '${name}'";
         } else {
