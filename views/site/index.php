@@ -16,17 +16,17 @@ $this->title = 'Yii app';
             Menu::widget([
                 'options' => ['class' => 'nav nav-tabs p-b'],
                 'items' => [
-                    ['label' => 'All orders', 'url' => ['', 'mode' => $mode, 'service_id' => $service_id], 'active' => !isset($status)],
-                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 0],
-                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 1],
-                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 2],
-                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 3],
-                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $mode, 'service_id' => $service_id], 'active' => $status === 4],
+                    ['label' => 'All orders', 'url' => ['', 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => !isset($params['status'])],
+                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 0],
+                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 1],
+                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 2],
+                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 3],
+                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 4],
                 ],
                 'activeCssClass'=>'active',
             ]);
         ?>
-        <form class="form-inline" action="/search" method="get">
+        <form class="form-inline" action="" method="get">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                 <span class="input-group-btn search-select-wrap">
@@ -58,16 +58,16 @@ $this->title = 'Yii app';
                             $items = [
                                 [
                                     'label' => "All (${allServices})",
-                                    'url' => ['', 'status' => $status, 'mode' => $mode],
-                                    'active' => !isset($service_id)
+                                    'url' => ['', 'status' => $params['status'], 'mode' => $params['mode']],
+                                    'active' => !isset($params['service_id'])
                                 ]
                             ];
 
                             foreach($services as $serviceItem) {
                                 array_push($items, [
                                         'label' => $serviceItem->name,
-                                        'url' => ['', 'status' => $status, 'mode' => $mode, 'service_id' => $serviceItem->id],
-                                        'active' => $service_id === $serviceItem->id
+                                        'url' => ['', 'status' => $params['status'], 'mode' => $params['mode'], 'service_id' => $serviceItem->id],
+                                        'active' => $params['service_id'] === $serviceItem->id
                                     ]
                                 );
                             }
@@ -92,9 +92,9 @@ $this->title = 'Yii app';
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => ['', 'status' => $status, 'service_id' => $service_id], 'active' => !isset($mode)],
-                                    ['label' => 'Manual', 'url' => ['', 'status' => $status, 'mode' => 1, 'service_id' => $service_id], 'active' => $mode === 1],
-                                    ['label' => 'Auto', 'url' => ['', 'status' => $status, 'mode' => 0, 'service_id' => $service_id], 'active' => $mode === 0],
+                                    ['label' => 'All', 'url' => ['', 'status' => $params['status'], 'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
+                                    ['label' => 'Manual', 'url' => ['', 'status' => $params['status'], 'mode' => 1, 'service_id' => $params['service_id']], 'active' => $params['mode'] === 1],
+                                    ['label' => 'Auto', 'url' => ['', 'status' => $params['status'], 'mode' => 0, 'service_id' => $params['service_id']], 'active' => $params['mode'] === 0],
                                 ],
                                 'activeCssClass'=>'active',
                             ]);

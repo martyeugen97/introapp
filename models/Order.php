@@ -62,5 +62,4 @@ class Order extends ActiveRecord
         $modeArray = ['Auto', 'Manual'];
         return $modeArray[$this->mode];
     }
-
 }

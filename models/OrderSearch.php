@@ -8,46 +8,47 @@ use app\models\Order;
 
 class OrderSearch extends Model
 {
+    public $searchType;
+    public $search;
+
     /**
      * @return array the validation rules.
      */
     public function rules()
     {
         return [
-            ['search-type', 'required', 'number', 'min' => 1, 'max' => 3],
-            ['search', 'required', 'string', 'min' => 1, 'max' => 128],
+            ['searchType', 'required'],
+            ['search', 'required'],
         ];
     }
 
     /**
      * @return array search orders
      */
-    public function search($type, $search)
+    public function search()
     {
-        switch ($type) {
+        switch ($this->searchType) {
             case 1:
-                return $this->searchOrderId($search);
+                return self::searchOrderId($this->search);
             case 2:
-                return $this->searchLink($search);
-            case 3:
-                return [];
+                return self::searchLink($this->search);
 
             default:
-                return [];
+                return Order::find();
         }
     }
 
-    private function searchOrderId($id)
+    private static function searchOrderId($id)
     {
-        return [ Order::findOne($id) ];
+        return Order::find()->where(compact('id'));
     }
 
-    private function searchLink($link)
+    private static function searchLink($link)
     {
         return Order::find()->where('link LIKE :link', [':link' => '%' . addslashes($link) . '%']);
     }
 
-    private function searchName($name)
+    private static function searchName($name)
     {
         $names = explode(' ', addslashes($name));
     }

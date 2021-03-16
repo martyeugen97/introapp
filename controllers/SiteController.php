@@ -62,60 +62,33 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $order = new Order();
-        $requestParams = Yii::$app->request->get();
-        $order->load($requestParams);
-        if (!$order->validate()) {
-            throw new BadRequestHttpException();
+        $params = Yii::$app->request->get();
+        if (isset($params['search'])) {
+            $model = new OrderSearch();
+            $model->searchType = $params['search-type'];
+            $model->search = $params['search'];
+            if (!$model->validate()) {
+                throw new BadRequestHttpException();
+            }
+            $orders = $model->search();
+        } else {
+            $model = new Order();
+            $model->load($params);
+            if (!$model->validate()) {
+                throw new BadRequestHttpException();
+            }
+            $orders = Order::find()->where($params);
+            $params = array_map('intval', $params);
         }
 
-        $orders = Order::find()->where($requestParams);
         $pages = new Pagination(['totalCount' => $orders->count()]);
         $pages->pageSize = 100;
-        $orders = $orders
-            ->offset($pages->offset)
+        $orders = $orders->offset($pages->offset)
             ->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
-        $requestParams = array_map('intval', $requestParams);
-        return $this->render('index', [
-            'orders' => $orders,
-            'pages' => $pages,
-            'status' => $requestParams['status'],
-            'mode' =>  $requestParams['mode'],
-            'service_id' => $requestParams['service_id'],
-        ]);
-
+        return $this->render('index', compact('orders', 'pages', 'params'));
     }
 
-    /**
-     * Search orders
-     *
-     * @return string
-     */
-    public function actionSearch()
-    {
-        die('');
-        $orderSearch = new OrderSearch();
-        $requestParams = Yii::$app->request->get();
-        $orderSearch->load($requestParams);
-        if (!$orderSearch->validate()) {
-            throw new BadRequestHttpException();
-        }
-
-        $orders = $orderSearch->search($requestParams['search-type'], $requestParams['search']);
-        //$pages = new Pagination(['totalCount' => count($orders)]);
-        //$pages->pageSize = 100;
-        /*
-        return $this->render('index', [
-            'orders' => $orders,
-            'pages' => $pages,
-            'search-type' => $requestParams['search-type'],
-            'search' => $requestParams['search'],
-        ]);
-        */
-
-        return print_r($orders, true);
-    }
 }
