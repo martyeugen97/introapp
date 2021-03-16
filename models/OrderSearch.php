@@ -32,7 +32,8 @@ class OrderSearch extends Model
                 return self::searchOrderId($this->search);
             case 2:
                 return self::searchLink($this->search);
-
+            case 3:
+                return self::searchName($this->search);
             default:
                 return Order::find();
         }
@@ -51,5 +52,18 @@ class OrderSearch extends Model
     private static function searchName($name)
     {
         $names = explode(' ', addslashes($name));
+        $count = count($names);
+        if ($count == 1) {
+            $where = "`first_name` LIKE '%${names[0]}%' OR `last_name` LIKE '%${names[0]}%'";
+        } elseif ($count == 2) {
+            $where = "CONCAT(`first_name`, ' ', `last_name`) = '${name}'";
+        } else {
+            return Order::find();
+        }
+
+        return Order::find()->select('o.*')
+            ->from('orders o')
+            ->leftJoin('users u', 'o.user_id = u.id')
+            ->where($where);
     }
 }

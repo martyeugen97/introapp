@@ -28,7 +28,7 @@ $this->title = 'Yii app';
         ?>
         <form class="form-inline" action="" method="get">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
+                <input type="text" name="search" class="form-control" value="" placeholder="<?= $params['search'] ?? 'Search orders' ?>" >
                 <span class="input-group-btn search-select-wrap">
                     <select class="form-control search-select" name="search-type">
                         <option value="1" selected="">Order ID</option>
