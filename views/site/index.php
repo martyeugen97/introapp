@@ -7,38 +7,38 @@ use app\models\User;
 use app\models\Service;
 use yii\widgets\LinkPager;
 use yii\widgets\Menu;
+use yii\helpers\Url;
 
 $this->title = 'Yii app';
 ?>
 <div class="site-index">
     <div class="body-content">
-        <?=
-            Menu::widget([
-                'options' => ['class' => 'nav nav-tabs p-b'],
-                'items' => [
-                    ['label' => 'All orders', 'url' => ['', 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => !isset($params['status'])],
-                    ['label' => 'Pending', 'url' => ['', 'status' => 0, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 0],
-                    ['label' => 'In progress', 'url' => ['', 'status' => 1, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 1],
-                    ['label' => 'Completed', 'url' => ['', 'status' => 2, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 2],
-                    ['label' => 'Canceled', 'url' => ['', 'status' => 3, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 3],
-                    ['label' => 'Error', 'url' => ['', 'status' => 4, 'mode' => $params['mode'], 'service_id' => $params['service_id']], 'active' => $params['status'] === 4],
-                ],
-                'activeCssClass'=>'active',
-            ]);
-        ?>
-        <form class="form-inline" action="" method="get">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control" value="" placeholder="<?= $params['search'] ?? 'Search orders' ?>" >
-                <span class="input-group-btn search-select-wrap">
-                    <select class="form-control search-select" name="search-type">
-                        <option value="1" selected="">Order ID</option>
-                        <option value="2">Link</option>
-                        <option value="3">Username</option>
-                    </select>
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                </span>
-            </div>
-        </form>
+        <ul class="nav nav-tabs p-b">
+            <li <?= !isset($params['status']) ? 'class="active"' : '' ?> >
+                <a href="<?= Url::toRoute(['', 'mode' => $params['mode'], 'service_id' => $params['service_id']]) ?>">All orders</a>
+            </li>
+
+            <?php foreach (Order::getAllStatuses() as $statusId => $statusName): ?>
+                <li <?= (is_numeric($params['status']) && $params['status'] === $statusId) ? 'class="active"' : '' ?> >
+                    <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>"> <?= $statusName ?></a>
+                </li>
+            <?php endforeach ?>
+            <li class="pull-right custom-search">
+                <form class="form-inline" action="" method="get">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" value="<?= $params['search'] ?? '' ?>" placeholder="Search orders" >
+                        <span class="input-group-btn search-select-wrap">
+                            <select class="form-control search-select" name="search-type">
+                                <option value="1" selected="">Order ID</option>
+                                <option value="2">Link</option>
+                                <option value="3">Username</option>
+                            </select>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </span>
+                    </div>
+                </form>
+            </li>
+        </ul>
         <table class="table order-table">
             <thead>
             <tr>

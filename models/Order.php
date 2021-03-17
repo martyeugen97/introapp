@@ -9,6 +9,8 @@ use app\models\User;
 
 class Order extends ActiveRecord
 {
+    private const statusArray = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
+    private const modeArray = ['Auto', 'Manual'];
     /**
      * @return array the validation rules.
      */
@@ -34,8 +36,16 @@ class Order extends ActiveRecord
      */
     public function getStatus()
     {
-        $statusArray = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
-        return $statusArray[$this->status];
+        return self::statusArray[$this->status];
+    }
+
+    /**
+     * @return string[] return array of statuses;
+     */
+
+    public static function getAllStatuses()
+    {
+        return self::statusArray;
     }
 
     /**
@@ -59,7 +69,6 @@ class Order extends ActiveRecord
      */
     public function getMode()
     {
-        $modeArray = ['Auto', 'Manual'];
-        return $modeArray[$this->mode];
+        return self::modeArray[$this->mode];
     }
 }
