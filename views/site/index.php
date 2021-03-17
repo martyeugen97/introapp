@@ -26,7 +26,7 @@ $this->title = 'Yii app';
             <li class="pull-right custom-search">
                 <form class="form-inline" action="" method="get">
                     <div class="input-group">
-                        <?php if (is_numeric($params['status']): ?>
+                        <?php if (is_numeric($params['status'])): ?>
                             <input type="hidden" name="status" value="<?= $params['status']?>">
                         <?php endif; ?>
                         <input type="text" name="search" class="form-control" value="<?= $params['search'] ?? '' ?>" placeholder="Search orders" >
