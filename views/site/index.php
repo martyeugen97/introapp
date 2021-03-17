@@ -26,12 +26,15 @@ $this->title = 'Yii app';
             <li class="pull-right custom-search">
                 <form class="form-inline" action="" method="get">
                     <div class="input-group">
+                        <?php if (is_numeric($params['status']): ?>
+                            <input type="hidden" name="status" value="<?= $params['status']?>">
+                        <?php endif; ?>
                         <input type="text" name="search" class="form-control" value="<?= $params['search'] ?? '' ?>" placeholder="Search orders" >
                         <span class="input-group-btn search-select-wrap">
                             <select class="form-control search-select" name="search-type">
-                                <option value="1" selected="">Order ID</option>
-                                <option value="2">Link</option>
-                                <option value="3">Username</option>
+                                <option value="1" <?= $params['search-type'] == 1 ? 'selected' : '' ?>>Order ID</option>
+                                <option value="2" <?= $params['search-type'] == 2 ? 'selected' : '' ?>>Link</option>
+                                <option value="3" <?= $params['search-type'] == 3 ? 'selected' : '' ?>>Username</option>
                             </select>
                             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </span>
