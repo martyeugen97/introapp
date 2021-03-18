@@ -17,8 +17,9 @@ class OrderSearch extends Model
     public function rules()
     {
         return [
-            ['searchType', 'required'],
-            ['search', 'required'],
+            [['searchType', 'search'], 'required'],
+            ['searchType','number', 'min' => 1 ,'max' => 3],
+            ['search', 'string', 'min' => 1, 'max' => 128],
         ];
     }
 

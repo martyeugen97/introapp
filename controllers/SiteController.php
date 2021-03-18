@@ -63,24 +63,23 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $params = Yii::$app->request->get();
+        $orders = Order::find();
         if (isset($params['search'])) {
             $model = new OrderSearch();
             $model->searchType = $params['search-type'];
             $model->search = $params['search'];
-            if (!$model->validate()) {
-                throw new BadRequestHttpException();
-            }
-            $orders = $model->search();
-            if (isset($params['status'])) {
-                $orders = $orders->andWhere(['status' => $params['status']]);
+            if ($model->validate()) {
+                $orders = $model->search();
+                if (isset($params['status'])) {
+                    $orders = $orders->andWhere(['status' => $params['status']]);
+                }
             }
         } else {
             $model = new Order();
             $model->load($params);
-            if (!$model->validate()) {
-                throw new BadRequestHttpException();
+            if ($model->validate()) {
+                $orders = Order::find()->where($params);
             }
-            $orders = Order::find()->where($params);
         }
 
         $pages = new Pagination(['totalCount' => $orders->count()]);
