@@ -63,6 +63,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $params = Yii::$app->request->get();
+        unset($params['page']);
+        unset($params['per-page']);
+
         $orders = Order::find()->where(['id' => null]);
         if (isset($params['search'])) {
             $model = new OrderSearch();
