@@ -72,7 +72,8 @@ $this->title = 'Yii app';
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li <?= !isset($params['service_id']) ? 'class="active"' : '' ?> >
                                 <a href="<?= Url::toRoute(['', 'status' => $params['status'], 'mode' => $params['mode']]) ?>">
-                                    All (<?= Service::find()->count() ?>)
+                                    <?= Yii::t('app','All') ?>
+                                    (<?= Service::find()->count() ?>)
                                 </a>
                             </li>
                             <?php foreach(Service::find()->all() as $service): ?>
@@ -90,18 +91,18 @@ $this->title = 'Yii app';
                     <div class="dropdown">
                         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Mode
+                            <?= Yii::t('app', 'Mode') ?>
                             <span class="caret"></span>
                         </button>
                         <?=
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => ['', 'status' => $params['status'],
+                                    ['label' => Yii::t('app', 'All'), 'url' => ['', 'status' => $params['status'],
                                         'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
-                                    ['label' => 'Manual', 'url' => ['', 'status' => $params['status'], 'mode' => 1,
+                                    ['label' => Yii::t('app','Manual'), 'url' => ['', 'status' => $params['status'], 'mode' => 1,
                                         'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 1],
-                                    ['label' => 'Auto', 'url' => ['', 'status' => $params['status'], 'mode' => 0,
+                                    ['label' => Yii::t('app','Auto'), 'url' => ['', 'status' => $params['status'], 'mode' => 0,
                                         'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 0],
                                 ],
                                 'activeCssClass'=>'active',
@@ -123,8 +124,8 @@ $this->title = 'Yii app';
                             <span class="label-id"><?= $order->service_id ?></span>
                             <?= Service::findOne($order->service_id)->name ?>
                         </td>
-                        <td><?= $order->getStatus() ?></td>
-                        <td><?= $order->getMode() ?></td>
+                        <td><?= Yii::t('app', $order->getStatus()) ?></td>
+                        <td><?= Yii::t('app', $order->getMode()) ?></td>
                         <td>
                             <span class="nowrap"><?= $order->getCreatedDate() ?></span>
                             <span class="nowrap"><?= $order->getCreatedTime() ?></span>
