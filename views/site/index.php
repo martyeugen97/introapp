@@ -69,9 +69,6 @@ $this->title = 'Yii app';
                             <?= Yii::t('app','Service') ?>
                             <span class="caret"></span>
                         </button>
-
-
-
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li <?= !isset($params['service_id']) ? 'class="active"' : '' ?> >
                                 <a href="<?= Url::toRoute(['', 'status' => $params['status'], 'mode' => $params['mode']]) ?>">
