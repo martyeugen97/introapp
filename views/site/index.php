@@ -21,11 +21,12 @@ $this->title = 'Yii app';
             </li>
 
             <?php foreach (Order::getAllStatuses() as $statusId => $statusName): ?>
-                <li <?= (is_numeric($params['status']) && $params['status'] === $statusId) ? 'class="active"' : '' ?> >
+                <li <?= (is_numeric($params['status']) && $params['status'] == $statusId) ? 'class="active"' : '' ?> >
                     <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>">
                         <?= Yii::t('app', $statusName) ?></a>
                 </li>
             <?php endforeach ?>
+
             <li class="pull-right custom-search">
                 <form class="form-inline" action="" method="get">
                     <div class="input-group">
@@ -46,7 +47,9 @@ $this->title = 'Yii app';
                                     <?=  Yii::t('app','Username') ?>
                                 </option>
                             </select>
-                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"aria-hidden="true"></span>
+                            </button>
                         </span>
                     </div>
                 </form>
@@ -80,7 +83,7 @@ $this->title = 'Yii app';
                                 array_push($items, [
                                         'label' => $serviceItem->name,
                                         'url' => ['', 'status' => $params['status'], 'mode' => $params['mode'], 'service_id' => $serviceItem->id],
-                                        'active' => $params['service_id'] === $serviceItem->id
+                                        'active' => is_numeric($params['service_id']) && $params['service_id'] == $serviceItem->id
                                     ]
                                 );
                             }
@@ -106,8 +109,10 @@ $this->title = 'Yii app';
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
                                     ['label' => 'All', 'url' => ['', 'status' => $params['status'], 'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
-                                    ['label' => 'Manual', 'url' => ['', 'status' => $params['status'], 'mode' => 1, 'service_id' => $params['service_id']], 'active' => $params['mode'] === 1],
-                                    ['label' => 'Auto', 'url' => ['', 'status' => $params['status'], 'mode' => 0, 'service_id' => $params['service_id']], 'active' => $params['mode'] === 0],
+                                    ['label' => 'Manual', 'url' => ['', 'status' => $params['status'], 'mode' => 1,
+                                        'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 1],
+                                    ['label' => 'Auto', 'url' => ['', 'status' => $params['status'], 'mode' => 0,
+                                        'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 0],
                                 ],
                                 'activeCssClass'=>'active',
                             ]);

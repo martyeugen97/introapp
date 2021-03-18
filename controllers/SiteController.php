@@ -81,7 +81,6 @@ class SiteController extends Controller
                 throw new BadRequestHttpException();
             }
             $orders = Order::find()->where($params);
-            $params = array_map('intval', $params);
         }
 
         $pages = new Pagination(['totalCount' => $orders->count()]);
