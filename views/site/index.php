@@ -9,18 +9,21 @@ use yii\widgets\LinkPager;
 use yii\widgets\Menu;
 use yii\helpers\Url;
 
+Yii::$app->language = Yii::$app->params['language'];
 $this->title = 'Yii app';
 ?>
 <div class="site-index">
     <div class="body-content">
         <ul class="nav nav-tabs p-b">
             <li <?= !isset($params['status']) ? 'class="active"' : '' ?> >
-                <a href="<?= Url::toRoute(['', 'mode' => $params['mode'], 'service_id' => $params['service_id']]) ?>">All orders</a>
+                <a href="<?= Url::toRoute(['', 'mode' => $params['mode'], 'service_id' => $params['service_id']]) ?>">
+                    <?= Yii::t('app', 'All orders')?></a>
             </li>
 
             <?php foreach (Order::getAllStatuses() as $statusId => $statusName): ?>
                 <li <?= (is_numeric($params['status']) && $params['status'] === $statusId) ? 'class="active"' : '' ?> >
-                    <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>"> <?= $statusName ?></a>
+                    <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>">
+                        <?= Yii::t('app', $statusName) ?></a>
                 </li>
             <?php endforeach ?>
             <li class="pull-right custom-search">
@@ -29,12 +32,19 @@ $this->title = 'Yii app';
                         <?php if (is_numeric($params['status'])): ?>
                             <input type="hidden" name="status" value="<?= $params['status']?>">
                         <?php endif; ?>
-                        <input type="text" name="search" class="form-control" value="<?= $params['search'] ?? '' ?>" placeholder="Search orders" >
+                        <input type="text" name="search" class="form-control" value="<?= $params['search'] ?? '' ?>"
+                               placeholder="<?=  Yii::t('app', 'Search orders') ?>">
                         <span class="input-group-btn search-select-wrap">
                             <select class="form-control search-select" name="search-type">
-                                <option value="1" <?= $params['search-type'] == 1 ? 'selected' : '' ?>>Order ID</option>
-                                <option value="2" <?= $params['search-type'] == 2 ? 'selected' : '' ?>>Link</option>
-                                <option value="3" <?= $params['search-type'] == 3 ? 'selected' : '' ?>>Username</option>
+                                <option value="1" <?= $params['search-type'] == 1 ? 'selected' : '' ?>>
+                                    <?=  Yii::t('app','Order ID') ?>
+                                </option>
+                                <option value="2" <?= $params['search-type'] == 2 ? 'selected' : '' ?>>
+                                    <?=  Yii::t('app','Link') ?>
+                                </option>
+                                <option value="3" <?= $params['search-type'] == 3 ? 'selected' : '' ?>>
+                                    <?=  Yii::t('app','Username') ?>
+                                </option>
                             </select>
                             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </span>
@@ -45,14 +55,14 @@ $this->title = 'Yii app';
         <table class="table order-table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Link</th>
-                <th>Quantity</th>
+                <th><?= Yii::t('app','ID') ?></th>
+                <th><?= Yii::t('app','User') ?></th>
+                <th><?= Yii::t('app','Link') ?></th>
+                <th><?= Yii::t('app','Quantity') ?></th>
                 <th class="dropdown-th">
                     <div class="dropdown">
                         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Service
+                            <?= Yii::t('app','Service') ?>
                             <span class="caret"></span>
                         </button>
                         <?php
@@ -83,7 +93,7 @@ $this->title = 'Yii app';
                         ?>
                     </div>
                 </th>
-                <th>Status</th>
+                <th><?= Yii::t('app','Status') ?></th>
                 <th class="dropdown-th">
                     <div class="dropdown">
                         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
@@ -104,7 +114,7 @@ $this->title = 'Yii app';
                         ?>
                     </div>
                 </th>
-                <th>Created</th>
+                <th><?= Yii::t('app','Created') ?></th>
             </tr>
             </thead>
             <tbody>
