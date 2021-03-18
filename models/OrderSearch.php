@@ -52,10 +52,10 @@ class OrderSearch extends Model
     private static function searchName($name)
     {
         $name = addslashes($name);
-        $count = count(explode(' ', $name));
-        if ($count == 1) {
+        $wordCount = count(explode(' ', $name));
+        if ($wordCount == 1) {
             $where = "`first_name` LIKE '%${name}%' OR `last_name` LIKE '%${name}%'";
-        } elseif ($count == 2) {
+        } elseif ($wordCount == 2) {
             $where = "CONCAT(`first_name`, ' ', `last_name`) = '${name}'";
         } else {
             return Order::find();

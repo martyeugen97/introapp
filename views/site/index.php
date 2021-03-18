@@ -108,7 +108,8 @@ $this->title = 'Yii app';
                             Menu::widget([
                                 'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
                                 'items' => [
-                                    ['label' => 'All', 'url' => ['', 'status' => $params['status'], 'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
+                                    ['label' => 'All', 'url' => ['', 'status' => $params['status'],
+                                        'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
                                     ['label' => 'Manual', 'url' => ['', 'status' => $params['status'], 'mode' => 1,
                                         'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 1],
                                     ['label' => 'Auto', 'url' => ['', 'status' => $params['status'], 'mode' => 0,
@@ -130,11 +131,15 @@ $this->title = 'Yii app';
                         <td class="link"><?= $order->link ?></td>
                         <td><?= $order->quantity ?></td>
                         <td class="service">
-                            <span class="label-id"><?= $order->service_id ?></span> <?= Service::findOne($order->service_id)->name ?>
+                            <span class="label-id"><?= $order->service_id ?></span>
+                            <?= Service::findOne($order->service_id)->name ?>
                         </td>
                         <td><?= $order->getStatus() ?></td>
                         <td><?= $order->getMode() ?></td>
-                        <td><span class="nowrap"><?= $order->getCreatedDate() ?></span> <span class="nowrap"><?= $order->getCreatedTime() ?></span></td>
+                        <td>
+                            <span class="nowrap"><?= $order->getCreatedDate() ?></span>
+                            <span class="nowrap"><?= $order->getCreatedTime() ?></span>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
