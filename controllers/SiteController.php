@@ -63,7 +63,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $params = Yii::$app->request->get();
-        $orders = Order::find();
+        $orders = Order::find()->where(['id' => null]);
         if (isset($params['search'])) {
             $model = new OrderSearch();
             $model->searchType = $params['search-type'];
