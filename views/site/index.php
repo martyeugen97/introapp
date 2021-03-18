@@ -23,7 +23,8 @@ $this->title = 'Yii app';
             <?php foreach (Order::getAllStatuses() as $statusId => $statusName): ?>
                 <li <?= (is_numeric($params['status']) && $params['status'] == $statusId) ? 'class="active"' : '' ?> >
                     <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>">
-                        <?= Yii::t('app', $statusName) ?></a>
+                        <?= Yii::t('app', $statusName) ?>
+                    </a>
                 </li>
             <?php endforeach ?>
 
@@ -68,32 +69,23 @@ $this->title = 'Yii app';
                             <?= Yii::t('app','Service') ?>
                             <span class="caret"></span>
                         </button>
-                        <?php
-                            $services = Service::find()->all();
-                            $allServices = count($services);
-                            $items = [
-                                [
-                                    'label' => "All (${allServices})",
-                                    'url' => ['', 'status' => $params['status'], 'mode' => $params['mode']],
-                                    'active' => !isset($params['service_id'])
-                                ]
-                            ];
 
-                            foreach($services as $serviceItem) {
-                                array_push($items, [
-                                        'label' => $serviceItem->name,
-                                        'url' => ['', 'status' => $params['status'], 'mode' => $params['mode'], 'service_id' => $serviceItem->id],
-                                        'active' => is_numeric($params['service_id']) && $params['service_id'] == $serviceItem->id
-                                    ]
-                                );
-                            }
 
-                            echo Menu::widget([
-                                'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
-                                'items' => $items,
-                                'activeCssClass'=>'active',
-                            ]);
-                        ?>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li <?= !isset($params['service_id']) ? 'class="active"' : '' ?> >
+                                <a href="<?= Url::toRoute(['', 'status' => $params['status'], 'mode' => $params['mode']]) ?>">
+                                    All (<?= Service::find()->count() ?>)
+                                </a>
+                            </li>
+                            <?php foreach(Service::find()->all() as $service): ?>
+                                <li <?= is_numeric($params['service_id']) && $params['service_id'] == $service->id ? 'class="active"' : '' ?>>
+                                    <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'service_id' => $service->id])) ?>">
+                                        <span class="label-id"><?= $service->id ?></span> <?= $service->name ?>
+                                    </a>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
                     </div>
                 </th>
                 <th><?= Yii::t('app','Status') ?></th>
