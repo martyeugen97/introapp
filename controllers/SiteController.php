@@ -71,6 +71,9 @@ class SiteController extends Controller
                 throw new BadRequestHttpException();
             }
             $orders = $model->search();
+            if (isset($params['status'])) {
+                $orders = $orders->andWhere(['status' => $params['status']]);
+            }
         } else {
             $model = new Order();
             $model->load($params);
