@@ -3,25 +3,27 @@
 /**
  * Translation map for ru-RU
  */
+
 return [
-    'Orders' => 'Заказы',
-    'Order ID' => 'ID заказа',
-    'All orders' => 'Все заказы',
-    'Link' => 'Ссылка',
-    'Username' => 'Имя пользователя',
-    'Status' => 'Статус',
-    'Pending' => 'В ожидании',
-    'In progress' => 'Обрабатывается',
-    'Completed' => 'Завершён',
-    'Canceled' => 'Отменён',
-    'Error' => 'Ошибка',
-    'Mode' => 'Режим',
-    'Auto' => 'Автоматический',
-    'Manual' => 'Ручной',
-    'Search orders' => 'Поиск заказов',
-    'Quantity' => 'Количество',
-    'User' => 'Пользователь',
-    'All' => 'Все',
-    'Service' => 'Услуга',
-    'Created' => 'Создан'
+    'panel.label.id' => 'ID',
+    'panel.label.orders' => 'Заказы',
+    'panel.label.order_id' => 'ID заказа',
+    'panel.label.all_orders' => 'Все заказы',
+    'panel.label.link' => 'Ссылка',
+    'panel.label.username' => 'Имя пользователя',
+    'panel.label.status' => 'Статус',
+    'panel.label.status_pending' => 'В ожидании',
+    'panel.label.status_in_progress' => 'Обрабатывается',
+    'panel.label.status_completed' => 'Завершён',
+    'panel.label.status_canceled' => 'Отменён',
+    'panel.label.status_error' => 'Ошибка',
+    'panel.label.mode' => 'Режим',
+    'panel.label.mode_auto' => 'Автоматический',
+    'panel.label.mode_manual' => 'Ручной',
+    'panel.label.search_orders' => 'Поиск заказов',
+    'panel.label.quantity' => 'Количество',
+    'panel.label.user' => 'Пользователь',
+    'panel.label.all' => 'Все',
+    'panel.label.service' => 'Услуга',
+    'panel.label.created' => 'Создан'
 ];
