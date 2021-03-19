@@ -23,7 +23,7 @@ class OrderSearch extends Model
         return [
             [['searchType', 'search'], 'required'],
             ['searchType', 'number', 'min' => 1, 'max' => 3],
-            ['search', 'string', 'min' => 1, 'max' => 128],
+            ['search', 'string', 'length' => [1, 128]],
             ['status', 'number', 'min' => 0, 'max' => 4],
         ];
     }
