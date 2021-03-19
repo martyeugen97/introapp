@@ -2,9 +2,11 @@
 
 /* @var $this yii\web\View */
 
-use app\models\Order;
 use app\models\User;
 use app\models\Service;
+use app\getters\StatusGetter;
+use app\getters\ServiceGetter;
+use app\getters\ModeGetter;
 use yii\widgets\LinkPager;
 use yii\widgets\Menu;
 use yii\helpers\Url;
@@ -20,7 +22,7 @@ $this->title = 'Yii app';
                     <?= Yii::t('app', 'panel.label.all_orders')?></a>
             </li>
 
-            <?php foreach (Order::getAllStatuses() as $statusId => $statusName): ?>
+            <?php foreach (StatusGetter::getList() as $statusId => $statusName): ?>
                 <li <?= (is_numeric($params['status']) && $params['status'] == $statusId) ? 'class="active"' : '' ?> >
                     <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'status' => $statusId])) ?>">
                         <?= Yii::t('app', $statusName) ?>
@@ -73,10 +75,10 @@ $this->title = 'Yii app';
                             <li <?= !isset($params['service_id']) ? 'class="active"' : '' ?> >
                                 <a href="<?= Url::toRoute(['', 'status' => $params['status'], 'mode' => $params['mode']]) ?>">
                                     <?= Yii::t('app','panel.label.all') ?>
-                                    (<?= Service::find()->count() ?>)
+                                    (<?= ServiceGetter::getCount() ?>)
                                 </a>
                             </li>
-                            <?php foreach(Service::find()->all() as $service): ?>
+                            <?php foreach(ServiceGetter::getList() as $service): ?>
                                 <li <?= is_numeric($params['service_id']) && $params['service_id'] == $service->id ? 'class="active"' : '' ?>>
                                     <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'service_id' => $service->id])) ?>">
                                         <span class="label-id"><?= $service->id ?></span> <?= $service->name ?>
@@ -124,8 +126,8 @@ $this->title = 'Yii app';
                             <span class="label-id"><?= $order->service_id ?></span>
                             <?= Service::findOne($order->service_id)->name ?>
                         </td>
-                        <td><?= Yii::t('app', $order->getStatus()) ?></td>
-                        <td><?= Yii::t('app', $order->getMode()) ?></td>
+                        <td><?= Yii::t('app', StatusGetter::get($order->status)) ?></td>
+                        <td><?= Yii::t('app', ModeGetter::get($order->mode)) ?></td>
                         <td>
                             <span class="nowrap"><?= $order->getCreatedDate() ?></span>
                             <span class="nowrap"><?= $order->getCreatedTime() ?></span>

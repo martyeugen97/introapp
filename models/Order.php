@@ -9,8 +9,6 @@ use app\models\User;
 
 class Order extends ActiveRecord
 {
-    private const STATUS_ARRAY = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
-    private const MODE_ARRAY = ['Auto', 'Manual'];
     /**
      * @return array the validation rules.
      */
