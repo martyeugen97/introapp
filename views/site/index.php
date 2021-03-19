@@ -102,7 +102,7 @@ $this->title = 'Yii app';
                                         'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
                                     ['label' => Yii::t('app','panel.label.mode_manual'), 'url' => ['', 'status' => $params['status'], 'mode' => 1,
                                         'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 1],
-                                    ['label' => Yii::t('app','anel.label.mode_auto'), 'url' => ['', 'status' => $params['status'], 'mode' => 0,
+                                    ['label' => Yii::t('app','panel.label.mode_auto'), 'url' => ['', 'status' => $params['status'], 'mode' => 0,
                                         'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 0],
                                 ],
                                 'activeCssClass'=>'active',

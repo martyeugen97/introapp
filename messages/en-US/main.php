@@ -16,7 +16,7 @@ return [
     'panel.label.status_completed' => 'Completed',
     'panel.label.status_canceled' => 'Canceled',
     'panel.label.status_error' => 'Error',
-    'panel.label_mode' => 'Mode',
+    'panel.label.mode' => 'Mode',
     'panel.label.mode_auto' => 'Auto',
     'panel.label.mode_manual' => 'Manual',
     'panel.label.search_orders' => 'Search orders',
