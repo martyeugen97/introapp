@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Order;
-use app\models\OrderSearch;
+use app\models\search\OrderSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;

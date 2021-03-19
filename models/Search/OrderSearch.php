@@ -1,9 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use Yii;
 use yii\base\Model;
+use app\models\Order;
 
 /**
  * This is the model class for order search.
