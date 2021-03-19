@@ -4,12 +4,16 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\Order;
+
+/**
+ * This is the model class for order search.
+ */
 
 class OrderSearch extends Model
 {
     public $searchType;
     public $search;
+    public $status;
 
     /**
      * @return array the validation rules.
@@ -18,15 +22,39 @@ class OrderSearch extends Model
     {
         return [
             [['searchType', 'search'], 'required'],
-            ['searchType','number', 'min' => 1 ,'max' => 3],
+            ['searchType', 'number', 'min' => 1, 'max' => 3],
             ['search', 'string', 'min' => 1, 'max' => 128],
+            ['status', 'number', 'min' => 0, 'max' => 4],
         ];
+    }
+
+    public function setParams($params)
+    {
+        $this->searchType = $params['search-type'];
+        $this->search = $params['search'];
+        if (isset($params['status'])) {
+            $this->status = $params['status'];
+        }
+    }
+
+    /**
+     * @return array search orders and add status
+     */
+
+    public function filter()
+    {
+        $orders = $this->search();
+        if (isset($this->status)) {
+            $orders = $orders->andWhere(['status' => $this->status]);
+        }
+
+        return $orders;
     }
 
     /**
      * @return array search orders
      */
-    public function search()
+    private function search()
     {
         switch ($this->searchType) {
             case 1:

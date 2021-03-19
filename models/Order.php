@@ -9,8 +9,8 @@ use app\models\User;
 
 class Order extends ActiveRecord
 {
-    private const statusArray = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
-    private const modeArray = ['Auto', 'Manual'];
+    private const STATUS_ARRAY = ['Pending', 'In progress', 'Completed', 'Canceled', 'Error'];
+    private const MODE_ARRAY = ['Auto', 'Manual'];
     /**
      * @return array the validation rules.
      */
@@ -21,6 +21,28 @@ class Order extends ActiveRecord
             ['mode', 'number', 'min' => 0, 'max' => 1],
             ['service_id', 'number']
         ];
+    }
+
+    public function setParams($params)
+    {
+        $this->status = $params['status'];
+        $this->mode = $params['mode'];
+        $this->service_id = $params['service_id'];
+    }
+
+    public function filter()
+    {
+        $where = array();
+        if (isset($this->status)) {
+            $where['status'] = $this->status;
+        }
+        if (isset($this->mode)) {
+            $where['mode'] = $this->mode;
+        }
+        if (isset($this->service_id)) {
+            $where['service_id'] = $this->service_id;
+        }
+        return Order::find()->where($where);
     }
 
     /**
@@ -36,7 +58,7 @@ class Order extends ActiveRecord
      */
     public function getStatus()
     {
-        return self::statusArray[$this->status];
+        return self::STATUS_ARRAY[$this->status];
     }
 
     /**
@@ -45,7 +67,7 @@ class Order extends ActiveRecord
 
     public static function getAllStatuses()
     {
-        return self::statusArray;
+        return self::STATUS_ARRAY;
     }
 
     /**
@@ -69,6 +91,6 @@ class Order extends ActiveRecord
      */
     public function getMode()
     {
-        return self::modeArray[$this->mode];
+        return self::MODE_ARRAY[$this->mode];
     }
 }
