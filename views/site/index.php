@@ -8,8 +8,9 @@ use app\getters\StatusGetter;
 use app\getters\ServiceGetter;
 use app\getters\ModeGetter;
 use yii\widgets\LinkPager;
-use yii\widgets\Menu;
 use yii\helpers\Url;
+use yii\bootstrap\Dropdown;
+use yii\widgets\ActiveForm;
 
 Yii::$app->language = Yii::$app->params['language'];
 $this->title = Yii::$app->params['title'];
@@ -90,26 +91,33 @@ $this->title = Yii::$app->params['title'];
                 </th>
                 <th><?= Yii::t('app','panel.label.status') ?></th>
                 <th class="dropdown-th">
-                    <div class="dropdown">
+                    <div class="dropdown" aria-labelledby="dropdownMenu1">
                         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <?= Yii::t('app', 'panel.label.mode') ?>
                             <span class="caret"></span>
                         </button>
-                        <?=
-                            Menu::widget([
-                                'options' => ['class' => 'dropdown-menu', 'aria-labelledby' => 'dropdownMenu1'],
-                                'items' => [
-                                    ['label' => Yii::t('app', 'panel.label.all'), 'url' => ['', 'status' => $params['status'],
-                                        'service_id' => $params['service_id']], 'active' => !isset($params['mode'])],
-                                    ['label' => Yii::t('app','panel.label.mode_manual'), 'url' => ['', 'status' => $params['status'], 'mode' => 1,
-                                        'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 1],
-                                    ['label' => Yii::t('app','panel.label.mode_auto'), 'url' => ['', 'status' => $params['status'], 'mode' => 0,
-                                        'service_id' => $params['service_id']], 'active' => is_numeric($params['mode']) && $params['mode'] == 0],
-                                ],
-                                'activeCssClass'=>'active',
-                            ]);
-                        ?>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li <?= !isset($params['mode']) ? 'class="active"' : '' ?>>
+                                <a href="<?= Url::toRoute(['',
+                                  'status' => $params['status'],
+                                  'service_id' => $params['service_id']])
+                                ?>">
+                                    <?= Yii::t('app', 'panel.label.all') ?>
+                                </a>
+                            </li>
+                            <?php foreach(ModeGetter::getList() as $modeId => $mode): ?>
+                                <li <?= is_numeric($params['mode']) && $params['mode'] == $modeId ? 'class="active"' : ''?>>
+                                    <a href="<?= Url::toRoute(['',
+                                      'status' => $params['status'],
+                                      'service_id' => $params['service_id'],
+                                      'mode' => $modeId])
+                                    ?>">
+                                        <?= Yii::t('app', $mode) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
                 </th>
                 <th><?= Yii::t('app','panel.label.created') ?></th>
