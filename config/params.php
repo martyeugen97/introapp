@@ -6,4 +6,5 @@ return [
     'senderName' => 'Example.com mailer',
     'language' => 'ru-RU',
     'orders_per_page' => 100,
+    'title' => 'Yii app',
 ];

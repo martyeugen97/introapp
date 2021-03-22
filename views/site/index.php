@@ -12,7 +12,7 @@ use yii\widgets\Menu;
 use yii\helpers\Url;
 
 Yii::$app->language = Yii::$app->params['language'];
-$this->title = 'Yii app';
+$this->title = Yii::$app->params['title'];
 ?>
 <div class="site-index">
     <div class="body-content">
