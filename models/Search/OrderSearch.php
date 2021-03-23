@@ -69,10 +69,14 @@ class OrderSearch extends Model
 
     /**
      * Filters out according to params
+     * Return empty query if params are invalid
      * @return ActiveQuery
      */
     public function filter()
     {
+        if (!$this->validate()) {
+            return Order::find()->where(['id' => null]);
+        }
         $orders = $this->search();
         if (isset($this->status)) {
             $orders = $orders->andWhere(['status' => $this->status]);

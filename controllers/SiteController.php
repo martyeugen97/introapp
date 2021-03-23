@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Order;
 use app\models\search\OrderSearch;
+use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -61,13 +62,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $params = Yii::$app->request->get();
-        $orders = Order::find()->where(['id' => null]);
-
         $model = new OrderSearch();
         $model->setParams($params);
-        if ($model->validate()) {
-            $orders = $model->filter();
-        }
+        $orders = $model->filter();
 
         $pages = new Pagination(['totalCount' => $orders->count()]);
         $pages->pageSize = \Yii::$app->params['orders_per_page'];
