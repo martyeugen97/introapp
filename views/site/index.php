@@ -106,11 +106,7 @@ $this->title = Yii::$app->params['title'];
                             </li>
                             <?php foreach(ModeGetter::getList() as $modeId => $mode): ?>
                                 <li <?= is_numeric($params['mode']) && $params['mode'] == $modeId ? 'class="active"' : ''?>>
-                                    <a href="<?= Url::toRoute(['',
-                                      'status' => $params['status'],
-                                      'service_id' => $params['service_id'],
-                                      'mode' => $modeId])
-                                    ?>">
+                                    <a href="<?= Url::toRoute(array_merge($params ?? [], ['', 'mode' => $modeId])) ?>">
                                         <?= Yii::t('app', $mode) ?>
                                     </a>
                                 </li>
