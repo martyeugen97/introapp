@@ -3,9 +3,7 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
-use app\models\User;
 
 class Order extends ActiveRecord
 {
@@ -26,6 +24,7 @@ class Order extends ActiveRecord
     }
 
     /**
+     * Format created at, return only time
      * @return string
      */
     public function getCreatedTime()
@@ -34,6 +33,7 @@ class Order extends ActiveRecord
     }
 
     /**
+     * Format created at, return only date
      * @return string
      */
     public function getCreatedDate()

@@ -3,7 +3,6 @@
 
 namespace app\getters;
 
-
 class ModeGetter
 {
     private const MODE_ARRAY = [
@@ -12,8 +11,8 @@ class ModeGetter
     ];
 
     /**
-     *  @return array
-     *  Lists all modes
+     * Lists all modes
+     * @return array
      **/
     public static function getList()
     {
@@ -21,8 +20,8 @@ class ModeGetter
     }
 
     /**
-     *  @return string
-     *  Returns a mode by id
+     * @return string
+     * @params int
      **/
     public static function get($id)
     {

@@ -9,8 +9,6 @@ use app\getters\ServiceGetter;
 use app\getters\ModeGetter;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
-use yii\bootstrap\Dropdown;
-use yii\widgets\ActiveForm;
 
 Yii::$app->language = Yii::$app->params['language'];
 $this->title = Yii::$app->params['title'];

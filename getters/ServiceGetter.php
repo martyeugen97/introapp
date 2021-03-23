@@ -4,12 +4,13 @@
 namespace app\getters;
 
 use app\models\Service;
+use yii\db\BaseActiveRecord;
 
 class ServiceGetter
 {
     /**
-     *  @return array
-     *  Get all services
+     * @return array
+     * Get all services
      **/
     public static function getList()
     {
@@ -17,8 +18,8 @@ class ServiceGetter
     }
 
     /**
-     *  @return ?Order
-     *  Get service by ID or null
+     * Get service by ID or null
+     * @return BaseActiveRecord
      **/
     public static function get($id)
     {
@@ -26,8 +27,8 @@ class ServiceGetter
     }
 
     /**
-     *  @return int
-     *  Returns the number of services
+     * Returns the number of services
+     * @return int
      **/
     public static function getCount()
     {

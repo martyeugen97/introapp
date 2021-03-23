@@ -3,7 +3,6 @@
 
 namespace app\getters;
 
-
 class StatusGetter
 {
     private const STATUS_ARRAY = [
@@ -15,8 +14,8 @@ class StatusGetter
     ];
 
     /**
-     *  @return array
-     *  Lits all statuses
+     * Lists all statuses
+     * @return array
      **/
     public static function getList()
     {
@@ -24,8 +23,8 @@ class StatusGetter
     }
 
     /**
-     *  @return string
-     *  Returns a status by id
+     * @return string
+     * @params int
      **/
     public static function get($id)
     {

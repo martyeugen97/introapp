@@ -2,13 +2,12 @@
 
 namespace app\models\search;
 
-use Yii;
 use yii\base\Model;
 use app\models\Order;
 use yii\db\ActiveQuery;
 
 /**
- * A serch model for Order
+ * A search model for Order
  */
 
 class OrderSearch extends Model
@@ -38,8 +37,26 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return void
+     * Search by type
+     * @return ActiveQuery
+     */
+    private function search()
+    {
+        switch ($this->searchType) {
+            case self::SEARCH_BY_ORDER_ID:
+                return self::searchOrderId($this->search);
+            case self::SEARCH_BY_LINK:
+                return self::searchLink($this->search);
+            case self::SEARCH_BY_NAME:
+                return self::searchName($this->search);
+            default:
+                return Order::find();
+        }
+    }
+
+    /**
      * Loads filtering params
+     * @params array
      */
     public function setParams($params)
     {
@@ -51,8 +68,8 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return ActiveQuery
      * Filters out according to params
+     * @return ActiveQuery
      */
     public function filter()
     {
@@ -71,25 +88,9 @@ class OrderSearch extends Model
     }
 
     /**
+     * Search orders by ID
      * @return ActiveQuery
-     * Search by type
-     */
-    private function search()
-    {
-        switch ($this->searchType) {
-            case self::SEARCH_BY_ORDER_ID:
-                return self::searchOrderId($this->search);
-            case self::SEARCH_BY_LINK:
-                return self::searchLink($this->search);
-            case self::SEARCH_BY_NAME:
-                return self::searchName($this->search);
-            default:
-                return Order::find();
-        }
-    }
-
-    /**
-     * @return ActiveQuery;
+     * @parms int
      */
     private static function searchOrderId($id)
     {
@@ -97,7 +98,9 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return ActiveQuery;
+     * Search orders by links;
+     * @return ActiveQuery
+     * @params string
      */
     private static function searchLink($link)
     {
@@ -105,7 +108,9 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return ActiveQuery;
+     * Search orders by user's name
+     * @return ActiveQuery
+     * @params string
      */
     private static function searchName($name)
     {
