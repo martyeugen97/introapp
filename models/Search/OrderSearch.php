@@ -5,13 +5,18 @@ namespace app\models\search;
 use Yii;
 use yii\base\Model;
 use app\models\Order;
+use yii\db\ActiveQuery;
 
 /**
- * This is the model class for order search.
+ * A serch model for Order
  */
 
 class OrderSearch extends Model
 {
+    private const SEARCH_BY_ORDER_ID = 1;
+    private const SEARCH_BY_LINK = 2;
+    private const SEARCH_BY_NAME= 3;
+
     public $searchType;
     public $search;
     public $status;
@@ -32,6 +37,10 @@ class OrderSearch extends Model
         ];
     }
 
+    /**
+     * @return void
+     * Loads filtering params
+     */
     public function setParams($params)
     {
         $this->searchType = $params['search-type'];
@@ -42,9 +51,9 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return array search orders and add status
+     * @return ActiveQuery
+     * Filters out according to params
      */
-
     public function filter()
     {
         $orders = $this->search();
@@ -62,32 +71,42 @@ class OrderSearch extends Model
     }
 
     /**
-     * @return array search orders
+     * @return ActiveQuery
+     * Search by type
      */
     private function search()
     {
         switch ($this->searchType) {
-            case 1:
+            case self::SEARCH_BY_ORDER_ID:
                 return self::searchOrderId($this->search);
-            case 2:
+            case self::SEARCH_BY_LINK:
                 return self::searchLink($this->search);
-            case 3:
+            case self::SEARCH_BY_NAME:
                 return self::searchName($this->search);
             default:
                 return Order::find();
         }
     }
 
+    /**
+     * @return ActiveQuery;
+     */
     private static function searchOrderId($id)
     {
         return Order::find()->where(compact('id'));
     }
 
+    /**
+     * @return ActiveQuery;
+     */
     private static function searchLink($link)
     {
         return Order::find()->where('link LIKE :link', [':link' => '%' . addslashes($link) . '%']);
     }
 
+    /**
+     * @return ActiveQuery;
+     */
     private static function searchName($name)
     {
         $name = addslashes($name);

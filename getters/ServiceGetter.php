@@ -7,17 +7,29 @@ use app\models\Service;
 
 class ServiceGetter
 {
-    public static function getList(): array
+    /**
+     *  @return array
+     *  Get all services
+     **/
+    public static function getList()
     {
         return Service::find()->all();
     }
 
-    public static function get($id): ?Order
+    /**
+     *  @return ?Order
+     *  Get service by ID or null
+     **/
+    public static function get($id)
     {
         return Service::findOne($id);
     }
 
-    public static function getCount(): int
+    /**
+     *  @return int
+     *  Returns the number of services
+     **/
+    public static function getCount()
     {
         return Service::find()->count();
     }

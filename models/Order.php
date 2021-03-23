@@ -40,12 +40,4 @@ class Order extends ActiveRecord
     {
         return date("Y-m-d", $this->created_at);
     }
-
-    /**
-     * @return string
-     */
-    public function getMode()
-    {
-        return self::MODE_ARRAY[$this->mode];
-    }
 }

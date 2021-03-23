@@ -11,12 +11,20 @@ class ModeGetter
         'panel.label.mode_manual'
     ];
 
-    public static function getList(): array
+    /**
+     *  @return array
+     *  Lists all modes
+     **/
+    public static function getList()
     {
         return self::MODE_ARRAY;
     }
 
-    public static function get($id): string
+    /**
+     *  @return string
+     *  Returns a mode by id
+     **/
+    public static function get($id)
     {
         return self::MODE_ARRAY[$id];
     }

@@ -9,7 +9,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
-use yii\web\BadRequestHttpException;
 
 class SiteController extends Controller
 {

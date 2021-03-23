@@ -14,12 +14,20 @@ class StatusGetter
         'panel.label.status_error'
     ];
 
-    public static function getList(): array
+    /**
+     *  @return array
+     *  Lits all statuses
+     **/
+    public static function getList()
     {
         return self::STATUS_ARRAY;
     }
 
-    public static function get($id): string
+    /**
+     *  @return string
+     *  Returns a status by id
+     **/
+    public static function get($id)
     {
         return self::STATUS_ARRAY[$id];
     }
