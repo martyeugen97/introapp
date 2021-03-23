@@ -91,18 +91,9 @@ class OrderSearch extends Model
     private static function searchName($name)
     {
         $name = addslashes($name);
-        $wordCount = count(explode(' ', $name));
-        if ($wordCount == 1) {
-            $where = "`first_name` LIKE '%${name}%' OR `last_name` LIKE '%${name}%'";
-        } elseif ($wordCount == 2) {
-            $where = "CONCAT(`first_name`, ' ', `last_name`) = '${name}'";
-        } else {
-            return Order::find();
-        }
-
         return Order::find()->select('o.*')
             ->from('orders o')
             ->leftJoin('users u', 'o.user_id = u.id')
-            ->where($where);
+            ->where("CONCAT(`first_name`, ' ', `last_name`) LIKE '%${name}%'");
     }
 }
