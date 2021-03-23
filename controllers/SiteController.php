@@ -65,7 +65,7 @@ class SiteController extends Controller
         $params = Yii::$app->request->get();
         $orders = Order::find()->where(['id' => null]);
 
-        $model = isset($params['search']) && $params['search'] ? new OrderSearch() : new Order();
+        $model = new OrderSearch();
         $model->setParams($params);
         if ($model->validate()) {
             $orders = $model->filter();

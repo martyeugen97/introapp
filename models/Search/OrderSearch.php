@@ -15,6 +15,8 @@ class OrderSearch extends Model
     public $searchType;
     public $search;
     public $status;
+    public $mode;
+    public $service_id;
 
     /**
      * @return array the validation rules.
@@ -22,10 +24,11 @@ class OrderSearch extends Model
     public function rules()
     {
         return [
-            [['searchType', 'search'], 'required'],
             ['searchType', 'number', 'min' => 1, 'max' => 3],
             ['search', 'string', 'length' => [1, 128]],
             ['status', 'number', 'min' => 0, 'max' => 4],
+            ['mode', 'number', 'min' => 0, 'max' => 1],
+            ['service_id', 'number']
         ];
     }
 
@@ -33,9 +36,9 @@ class OrderSearch extends Model
     {
         $this->searchType = $params['search-type'];
         $this->search = $params['search'];
-        if (isset($params['status'])) {
-            $this->status = $params['status'];
-        }
+        $this->status = $params['status'];
+        $this->mode = $params['mode'];
+        $this->service_id = $params['service_id'];
     }
 
     /**
@@ -47,6 +50,12 @@ class OrderSearch extends Model
         $orders = $this->search();
         if (isset($this->status)) {
             $orders = $orders->andWhere(['status' => $this->status]);
+        }
+        if (isset($this->mode)) {
+            $orders = $orders->andWhere(['mode' => $this->mode]);
+        }
+        if (isset($this->service_id)) {
+            $orders = $orders->andWhere(['service_id' => $this->service_id]);
         }
 
         return $orders;
